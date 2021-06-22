@@ -21,6 +21,11 @@ body {
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
     border-radius: 10px;
+
+    @media (max-width: 620px) {
+      width: 70vw;
+    }
+
     &__content {
       display: flex;
       flex-direction: column;
@@ -32,6 +37,10 @@ body {
         font-family: 'Taviraj', serif;
         font-size: 2.5em;
         font-weight: 600;
+
+        @media (max-width: 620px) {
+          font-size: 7vw;
+        }
 
         svg {
           margin: 1.5em 0;
