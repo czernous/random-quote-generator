@@ -1,0 +1,7 @@
+@use 'app/styles/reset.scss';
+@use 'app/styles/app.scss';
+
+h1 {
+  color: #01fff2;
+  text-shadow: 1px 1px 10px rgba(#3f165a, 0.97);
+}
