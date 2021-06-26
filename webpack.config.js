@@ -29,11 +29,35 @@ module.exports = (env, { mode = 'development' }) => {
         },
         {
           test: /\.s[ac]ss$/i,
-          use: ['style-loader', 'css-loader', 'sass-loader'],
+          use: [
+            process.env.NODE_ENV !== 'production'
+              ? 'style-loader'
+              : MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sassOptions: {
+                  sourceMap: true,
+                },
+              },
+            },
+          ],
         },
         {
           test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-          use: ['file-loader'],
+          use: ['file-loader?name=/img/[name].[ext]'],
         },
       ],
     },
@@ -43,8 +67,6 @@ module.exports = (env, { mode = 'development' }) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'index.js',
-      publicPath: '/dist/',
-      umdNamedDefine: true,
     },
     optimization: {
       mangleWasmImports: true,
@@ -56,6 +78,11 @@ module.exports = (env, { mode = 'development' }) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"production"',
       }),
+      new HtmlWebpackPlugin({
+        filename: path.resolve(__dirname, 'dist', 'index.html'),
+        template: path.resolve(__dirname, 'src', 'index.html'),
+      }),
+      new webpack.HotModuleReplacementPlugin(),
     ],
   };
   /**
@@ -76,11 +103,6 @@ module.exports = (env, { mode = 'development' }) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"development"',
       }),
-      new HtmlWebpackPlugin({
-        filename: path.resolve(__dirname, 'dist/index.html'),
-        template: path.resolve(__dirname, 'src', 'index.html'),
-      }),
-      new webpack.HotModuleReplacementPlugin(),
     ];
     config.devServer = {
       contentBase: path.resolve(__dirname, 'dist'),
