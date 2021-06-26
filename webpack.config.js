@@ -67,6 +67,7 @@ module.exports = (env, { mode = 'development' }) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'index.js',
+      publicPath: './',
     },
     optimization: {
       mangleWasmImports: true,
