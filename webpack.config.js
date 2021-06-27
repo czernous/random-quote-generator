@@ -67,7 +67,7 @@ module.exports = (env, { mode = 'development' }) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'index.js',
-      publicPath: './',
+      publicPath: '/',
     },
     optimization: {
       mangleWasmImports: true,
@@ -104,6 +104,11 @@ module.exports = (env, { mode = 'development' }) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"development"',
       }),
+      new HtmlWebpackPlugin({
+        filename: path.resolve(__dirname, 'dist', 'index.html'),
+        template: path.resolve(__dirname, 'src', 'index.html'),
+      }),
+      new webpack.HotModuleReplacementPlugin(),
     ];
     config.devServer = {
       contentBase: path.resolve(__dirname, 'dist'),

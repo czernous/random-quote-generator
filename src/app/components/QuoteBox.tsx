@@ -136,7 +136,9 @@ const QuoteBox = (): ReactElement => {
           <a
             className="social__link"
             id="tweet-quote"
-            href="twitter.com/intent/tweet"
+            href={`https://twitter.com/intent/tweet?text=${apiData.data.text
+              .split(' ')
+              .join('%20')}%0A-${apiData.data.author.split(' ').join('%20')}`}
             target="_top"
           >
             <img src={twitterLogo} alt="twitter" />
